@@ -1,15 +1,24 @@
 import modal
 
-app = modal.App("jupyter-gpu")
+app = modal.App("jupyter-cpu-server")
 
 image = (
     modal.Image.debian_slim()
+    .run_commands(
+        "apt-get update",
+        "apt-get install -y git"
+    )
     .pip_install(
         "jupyterlab",
+        "jupyter>=1.0",
+        "ipywidgets>=8.0",
         "pandas",
         "numpy",
+        "websockets>=12.0",
+        "requests>=2.28",
         "pyarrow",
         "plotly",
+        "scipy>=1.11",
         "scikit-learn",
         "hdbscan"
     )
@@ -20,7 +29,7 @@ image = (
     image=image,
     # gpu="any",  # or "A10G", "T4", etc.
     timeout=60 * 60 * 24,  # 24 hours
-    # secrets=[modal.Secret.from_name("github-token")]
+    secrets=[modal.Secret.from_name("github-token")]
 )
 
 @modal.web_server(port=8888)
@@ -38,14 +47,14 @@ def run_jupyter():
 
     # os.chdir("/root/project")
 
-    # token = os.environ["GITHUB_TOKEN"]
-    # subprocess.run([
-    #     "git", "clone",
-    #     f"https://{token}@github.com/Joshua-Abok/market_microstructure_manipulation.git",
-    #     "/root/project"
-    # ])
+    token = os.environ["GITHUB_TOKEN"]
+    subprocess.run([
+        "git", "clone",
+        f"https://{token}@github.com/Joshua-Abok/market_microstructure_manipulation.git",
+        "/root/project"
+    ])
 
-    os.chdir("/root/market_microstructure_manipulation")
+    os.chdir("/root/project")
 
     subprocess.run([
         "jupyter", "lab",
@@ -53,6 +62,6 @@ def run_jupyter():
         "--port=8888",
         "--no-browser",
         "--allow-root",
-        "--NotebookApp.token=''",  # disables token (optional)
-        "--NotebookApp.password=''"
+        "--NotebookApp.token=",  # disables token (optional)
+        "--NotebookApp.password="  # disables password (optional)
     ])
