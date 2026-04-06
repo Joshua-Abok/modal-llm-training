@@ -141,7 +141,7 @@ modal serve modaL_jupyter.py
 
 ---
 
-## 🧪 Sandbox Approach (local runner)
+## B. Sandbox Approach (local runner)
 
 Also, this repo contains a lightweight sandbox launcher `jupyter_sandbox.py` which starts a Modal sandbox locally and prints a URL for Jupyter Lab. This is useful for quick interactive sessions where you prefer invoking a local Python script instead of `modal run`.
 
@@ -180,6 +180,7 @@ Example images (included in repo):
 - **Set token:** `modal token set --token-id <ID> --token-secret <SECRET>`
 - **Run (Tunnel, CPU default):** `modal run jupyter_tunnel.py`
 - **Run (Sandbox):** `python jupyter_sandbox.py`
+     > - Runs for up to **24 hours** by default
 - **Optional GPU:** add `gpu="any"` to the `@app.function` decorator
 
 
