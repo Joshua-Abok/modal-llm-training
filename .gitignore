@@ -1,2 +1,6 @@
 llm_inferencing/__pycache__
 .modal_env
+.modalEnv_ubuntu/
+__pycache__/
+run_jupyter_server/__pycache__/
+run_jupyter_server/jupyter_sandbox.py
