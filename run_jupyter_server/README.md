@@ -1,6 +1,11 @@
 # 🚀 Modal Jupyter Setup (CPU by default)
 
-This module launches a **Jupyter Lab environment on Modal** using a tunnel approach. The script `jupyter_tunnel.py` runs Jupyter Lab inside a Modal container and creates a secure public URL forwarded to your browser.
+This folder contains modules that launch a **Jupyter Lab environment on Modal** using: 
+- **A. Tunnel approach**
+- **B. Sandbox approach**
+
+## A. Tunnel Approach
+ The script `jupyter_tunnel.py` runs Jupyter Lab inside a Modal container and creates a secure public URL forwarded to your browser.
 
 This repository includes `run_jupyter_server/jupyter_tunnel.py` which:
 
@@ -12,7 +17,7 @@ This repository includes `run_jupyter_server/jupyter_tunnel.py` which:
 
 **Important:** This script requests CPU resources only (no GPU). By default Modal functions without a `gpu` argument will run on CPU. To request a GPU, add or uncomment `gpu="any"` in the `@app.function(...)` decorator in `jupyter_tunnel.py`.
 
-## 📁 File
+### 📁 File
 
 ```
 run_jupyter_server/jupyter_tunnel.py
@@ -20,7 +25,7 @@ run_jupyter_server/jupyter_tunnel.py
 
 ---
 
-## ⚙️ What It Does
+### ⚙️ What It Does
 
 - Spins up a remote Jupyter Lab instance
 - Runs inside a containerized environment
@@ -30,7 +35,7 @@ run_jupyter_server/jupyter_tunnel.py
 
 ---
 
-## 🧰 Prerequisites (local)
+### 🧰 Prerequisites (local)
 
 1. Python 3.9+
 2. Create a virtual environment (recommended) and install the Modal CLI client:
@@ -55,7 +60,7 @@ modal token set --token-id <TOKEN_ID> --token-secret <TOKEN_SECRET>
 
 ---
 
-## 🚀 Run (CPU — default)
+### 🚀 Run (CPU — default)
 
 This script does not request a GPU, so running it will schedule a CPU container. To start the Jupyter server from this repo:
 
@@ -74,7 +79,7 @@ Open that URL in your browser to access Jupyter Lab.
 
 ---
 
-## 🔐 Private Repo Access (Optional)
+### 🔐 Private Repo Access (Optional)
 
 To clone a private GitHub repository inside the container, create a Modal secret with your GitHub token and reference it in `jupyter_tunnel.py`:
 
@@ -87,7 +92,7 @@ Then `jupyter_tunnel.py` uses `@app.function(secrets=[modal.Secret.from_name("gi
 
 ---
 
-## ⚡ GPU Support (Optional)
+### ⚡ GPU Support (Optional)
 
 If you require GPU, edit `run_jupyter_server/jupyter_tunnel.py` and modify the `@app.function` decorator to request GPU resources, for example:
 
@@ -106,7 +111,7 @@ Uncomment or add the `gpu` argument, then run `modal run jupyter_tunnel.py`. Not
 ---
 
 
-# 🔄 Redeploy (Update Code)
+### 🔄 Redeploy (Update Code)
 
 Whenever you make changes:
 
@@ -120,7 +125,7 @@ modal serve modaL_jupyter.py
 * updates your running app
 * replaces the previous version
 
-## 🧠 Notes & Troubleshooting
+### 🧠 Notes & Troubleshooting
 
 - The script prints the forwarded Modal URL in the logs — open it with the token printed there.
 - If you see permission or clone errors, verify the `GITHUB_TOKEN` secret and repository URL.
@@ -136,11 +141,45 @@ modal serve modaL_jupyter.py
 
 ---
 
-## ✔️ Quick Checklist
+## 🧪 Sandbox Approach (local runner)
+
+Also, this repo contains a lightweight sandbox launcher `jupyter_sandbox.py` which starts a Modal sandbox locally and prints a URL for Jupyter Lab. This is useful for quick interactive sessions where you prefer invoking a local Python script instead of `modal run`.
+
+File: `run_jupyter_server/jupyter_sandbox.py`
+
+Run locally:
+
+```bash
+cd run_jupyter_server
+python jupyter_sandbox.py
+```
+
+The script prints a URL like:
+
+```
+https://<modal-sandbox-url>/?token=<TOKEN>
+```
+
+Open the URL in your browser to access Jupyter Lab.
+
+Example images (included in repo):
+
+- `images/SANDBOX-jupyterlab.png` — Jupyter Lab running inside the sandbox
+- `images/SANDBOX-server-modal-interface.png` — Modal dashboard view while sandbox runs
+
+> **Jupyter Lab running inside the sandbox**
+![Jupyter Lab](images/SANDBOX-jupyterlab.png)
+
+> **Modal dashboard view while sandbox runs**
+![Modal Interface - sandbox](images/SANDBOX-server-modal-interface.png)
+---
+
+### ✔️ Quick Checklist
 
 - **Install Modal CLI:** `pip install modal`
 - **Set token:** `modal token set --token-id <ID> --token-secret <SECRET>`
-- **Run (CPU):** `modal run jupyter_tunnel.py`
+- **Run (Tunnel, CPU default):** `modal run jupyter_tunnel.py`
+- **Run (Sandbox):** `python jupyter_sandbox.py`
 - **Optional GPU:** add `gpu="any"` to the `@app.function` decorator
 
 

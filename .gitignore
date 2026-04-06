@@ -3,4 +3,3 @@ llm_inferencing/__pycache__
 .modalEnv_ubuntu/
 __pycache__/
 run_jupyter_server/__pycache__/
-run_jupyter_server/jupyter_sandbox.py
