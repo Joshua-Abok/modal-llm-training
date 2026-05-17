@@ -20,7 +20,7 @@ import modal
 # ─── Configuration ───────────────────────────────────────────────────────────
 
 JUPYTER_PORT = 8888
-SANDBOX_TIMEOUT = 60 * 60 * 6  # 6 hours (adjust as needed)
+SANDBOX_TIMEOUT = 60 * 60 * 24  # 24 hours (adjust as needed)
 REPO_URL = "https://$GITHUB_TOKEN@github.com/Joshua-Abok/market_microstructure_manipulation.git"
 PROJECT_DIR = "/root/project"
 
@@ -90,7 +90,7 @@ def main():
             timeout=SANDBOX_TIMEOUT,
             image=image,
             app=app,
-            gpu=None,  # add a GPU if you need it!
+            gpu="A100-80GB",  # add a GPU if you need it! -> gpu="A100", "A100-80GB", "H100"
         )
 
     print(f"📦 Sandbox ID: {sandbox.object_id}")

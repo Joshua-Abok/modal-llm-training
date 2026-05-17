@@ -3,3 +3,6 @@ llm_inferencing/__pycache__
 .modalEnv_ubuntu/
 __pycache__/
 run_jupyter_server/__pycache__/
+llm_serving_vllm/__pycache__/
+
+.env

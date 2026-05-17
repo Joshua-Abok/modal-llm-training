@@ -43,6 +43,7 @@ PROJECT_DIR = "/root/project"
 
 @app.function(
     image=image,
+    gpu="A100-80GB",  # Uncomment if you need GPU support
     timeout=60 * 60 * 24,  # 24 hours
     secrets=[modal.Secret.from_name("github-token")],
     max_containers=1,
